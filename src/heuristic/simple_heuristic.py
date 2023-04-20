@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.metrics import accuracy_score
 
 # Load data from the file
-data = pd.read_csv("../data/covtype.data", header=None)
+data = pd.read_csv("../../data/covtype.data", header=None)
 
 # Split the dataset to input data and targets
 X = data.iloc[:, :-1]

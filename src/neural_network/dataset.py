@@ -8,7 +8,7 @@ def load_and_split_dataset(dataset_path: str, train_size: float):
     The function loads datasets to the Pandas DataFrame and splits them into train and test sets.
     It also normalizes values in a dataset.
 
-    Args:
+    Arguments:
         dataset_path (str) - A path to the dataset file.
         train_size (float) - The size of the training dataset (from 0 to 1).
 

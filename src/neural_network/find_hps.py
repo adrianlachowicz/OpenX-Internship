@@ -8,7 +8,6 @@ EPOCHS = 5
 
 
 def objective(trial: optuna.Trial):
-
     # Suggest hyper-parameters
     num_hidden_layers = trial.suggest_int("num_hidden_layers", 1, 6)
     is_dropout = trial.suggest_categorical("is_dropout", [True, False])
@@ -24,9 +23,11 @@ def objective(trial: optuna.Trial):
     model = build_model("test", num_hidden_layers, is_dropout, dropout_value)
 
     # Compile the model
-    model.compile(optimizer=keras.optimizers.Adam(learning_rate=learning_rate),
-                  loss="sparse_categorical_crossentropy",
-                  metrics="accuracy")
+    model.compile(
+        optimizer=keras.optimizers.Adam(learning_rate=learning_rate),
+        loss="sparse_categorical_crossentropy",
+        metrics="accuracy",
+    )
 
     # Get 30% of the base train dataset
     train_limit = int(len(X_train) * 0.3)
@@ -39,20 +40,25 @@ def objective(trial: optuna.Trial):
     y_test = y_test[:test_limit]
 
     # Train model and save a history of the training
-    history = model.fit(X_train, y_train,
-                        epochs=EPOCHS,
-                        verbose=0,
-                        validation_freq=1,
-                        validation_data=(X_test, y_test),
-                        callbacks=[TFKerasPruningCallback(trial, "val_accuracy")])
+    history = model.fit(
+        X_train,
+        y_train,
+        epochs=EPOCHS,
+        verbose=0,
+        validation_freq=1,
+        validation_data=(X_test, y_test),
+        callbacks=[TFKerasPruningCallback(trial, "val_accuracy")],
+    )
 
     return history.history["val_accuracy"][-1]  # Return last validation accuracy
 
 
 # Create Optuna study
-study = optuna.create_study(direction="maximize",
-                            storage="sqlite:///optuna_hp.sqlite3",
-                            study_name="tensorflow_model")
+study = optuna.create_study(
+    direction="maximize",
+    storage="sqlite:///optuna_hp.sqlite3",
+    study_name="tensorflow_model",
+)
 
 # Run optimizing parameters
 study.optimize(objective, n_trials=100, show_progress_bar=True)

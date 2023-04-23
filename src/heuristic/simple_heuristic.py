@@ -34,10 +34,3 @@ def simple_heuristic(elevations: np.array):
             outputs.append(0)
 
     return outputs
-
-
-# Perform a classification
-y_pred = simple_heuristic(elevations_)
-
-# Calculate and display an accuracy
-print("Accuracy:", accuracy_score(y, y_pred))

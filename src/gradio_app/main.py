@@ -86,6 +86,7 @@ def predict_heuristic(elevation: int):
         prediction (int) - A predicted label.
     """
     elevation = np.array([elevation])
+    print(elevation)
     return simple_heuristic(elevation)
 
 
@@ -100,12 +101,12 @@ def predict_knn(input):
         prediction (int) - A predicted label.
     """
     # Load the KNN Classifier
-    with open("models/knn_best.sav", "rb") as f:
+    with open("../../models/knn_best.sav", "rb") as f:
         knn = pickle.load(f)
 
     # Prepare data
     scaler = MinMaxScaler()
-    data = pd.read_csv("data/covtype.data", header=None)
+    data = pd.read_csv("../../data/covtype.data", header=None)
 
     # Split the dataset to input data and targets
     X = data.iloc[:, :-1]
@@ -130,7 +131,7 @@ def predict_knn(input):
 
 def predict_dtc(input):
     # Load the KNN Classifier
-    with open("models/decision_tree_best.sav", "rb") as f:
+    with open("../../models/decision_tree_best.sav", "rb") as f:
         dtc = pickle.load(f)
 
     prediction = dtc.predict(input)[0] - 1
@@ -162,11 +163,11 @@ def predict_nn(input):
         metrics="accuracy",
     )
 
-    model.load_weights("models/nn_best.h5")
+    model.load_weights("../../models/nn_best.h5")
 
     # Prepare data
     scaler = MinMaxScaler()
-    data = pd.read_csv("data/covtype.data", header=None)
+    data = pd.read_csv("../../data/covtype.data", header=None)
 
     # Split the dataset to input data and targets
     X = data.iloc[:, :-1]
@@ -184,7 +185,7 @@ def predict_nn(input):
     input = scaler.transform(input)
 
     # Make prediction
-    prediction = np.argmax(model.predict(input), axis=1)[0] + 1
+    prediction = np.argmax(model.predict(input), axis=1)[0]
 
     return prediction
 
@@ -240,6 +241,7 @@ def predict(
     if model == 0:
         # Use heuristic model
         prediction = predict_heuristic(int(elevation))[0]
+        print(prediction)
         label = FOREST_COVER_TYPE_CLASSES[prediction]
         return label
     elif model == 1:

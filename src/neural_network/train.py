@@ -9,8 +9,8 @@ config = {
     "hidden_layers": 6,
     "use_dropout": False,
     "dropout_value": 0.5,
-    "learning_rate": 0.001,
-    "epochs": 10
+    "learning_rate": 0.000855,
+    "epochs": 60
 }
 
 if __name__ == "__main__":

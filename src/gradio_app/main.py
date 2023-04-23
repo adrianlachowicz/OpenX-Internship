@@ -100,12 +100,12 @@ def predict_knn(input):
         prediction (int) - A predicted label.
     """
     # Load the KNN Classifier
-    with open("../../models/knn_best.sav", "rb") as f:
+    with open("models/knn_best.sav", "rb") as f:
         knn = pickle.load(f)
 
     # Prepare data
     scaler = MinMaxScaler()
-    data = pd.read_csv("../../data/covtype.data", header=None)
+    data = pd.read_csv("data/covtype.data", header=None)
 
     # Split the dataset to input data and targets
     X = data.iloc[:, :-1]
@@ -130,7 +130,7 @@ def predict_knn(input):
 
 def predict_dtc(input):
     # Load the KNN Classifier
-    with open("../../models/decision_tree_best.sav", "rb") as f:
+    with open("models/decision_tree_best.sav", "rb") as f:
         dtc = pickle.load(f)
 
     prediction = dtc.predict(input)[0] - 1
@@ -162,11 +162,11 @@ def predict_nn(input):
         metrics="accuracy",
     )
 
-    model.load_weights("../../models/nn_best.h5")
+    model.load_weights("models/nn_best.h5")
 
     # Prepare data
     scaler = MinMaxScaler()
-    data = pd.read_csv("../../data/covtype.data", header=None)
+    data = pd.read_csv("data/covtype.data", header=None)
 
     # Split the dataset to input data and targets
     X = data.iloc[:, :-1]
@@ -266,22 +266,22 @@ demo = gr.Interface(
     inputs=[
         gr.components.Dropdown(list(MODELS_CHOICES.keys()), label="Choose model: "),
         gr.components.Textbox(show_label=False),
-        gr.components.Textbox(label="Elevation", default=""),
-        gr.components.Textbox(label="Aspect", default=""),
-        gr.components.Textbox(label="Slope", default=""),
-        gr.components.Textbox(label="Horizontal distance to hydrology", default=""),
-        gr.components.Textbox(label="Vertical distance to hydrology", default=""),
-        gr.components.Textbox(label="Horizontal distance to roadways", default=""),
-        gr.components.Textbox(label="Hillshade at 9AM", default=""),
-        gr.components.Textbox(label="Hillshade at noon", default=""),
-        gr.components.Textbox(label="Hillshade at 3PM", default=""),
-        gr.components.Textbox(label="Horizontal distance to fire points", default=""),
+        gr.components.Textbox(label="Elevation"),
+        gr.components.Textbox(label="Aspect"),
+        gr.components.Textbox(label="Slope"),
+        gr.components.Textbox(label="Horizontal distance to hydrology"),
+        gr.components.Textbox(label="Vertical distance to hydrology"),
+        gr.components.Textbox(label="Horizontal distance to roadways"),
+        gr.components.Textbox(label="Hillshade at 9AM"),
+        gr.components.Textbox(label="Hillshade at noon"),
+        gr.components.Textbox(label="Hillshade at 3PM"),
+        gr.components.Textbox(label="Horizontal distance to fire points"),
         gr.components.Dropdown(
             list(WILDERNESS_AREA_CHOICES.keys()), label="Wilderness area"
         ),
         gr.components.Dropdown(list(SOIL_TYPES_CHOICES.keys()), label="Soil type"),
     ],
-    outputs=gr.outputs.Label(),
+    outputs=gr.components.Label(),
     title="Cover Type Classification",
 )
-demo.launch()
+demo.launch(server_name="0.0.0.0", server_port=8080)

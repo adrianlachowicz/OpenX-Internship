@@ -3,7 +3,7 @@ import tensorflow as tf
 from tensorflow import keras
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
-from dataset import load_and_split_dataset
+from src.neural_network.dataset import load_and_split_dataset
 
 
 def build_model(

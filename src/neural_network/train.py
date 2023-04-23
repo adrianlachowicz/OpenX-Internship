@@ -10,7 +10,7 @@ config = {
     "use_dropout": False,
     "dropout_value": 0.5,
     "learning_rate": 0.000855,
-    "epochs": 60
+    "epochs": 60,
 }
 
 if __name__ == "__main__":
@@ -30,13 +30,20 @@ if __name__ == "__main__":
     )
 
     # Define callbacks
-    tensorboard = TensorBoard(log_dir="./logs/"+config["name"]+"/")
-    model_checkpoint = ModelCheckpoint("./models/"+config["name"]+"/best_model.h5",
-                                       monitor='val_accuracy',
-                                       verbose=1,
-                                       save_best_only=True,
-                                       mode='max')
+    tensorboard = TensorBoard(log_dir="./logs/" + config["name"] + "/")
+    model_checkpoint = ModelCheckpoint(
+        "./models/" + config["name"] + "/best_model.h5",
+        monitor="val_accuracy",
+        verbose=1,
+        save_best_only=True,
+        mode="max",
+    )
 
     # Train model
-    history = model.fit(X_train, y_train, epochs=config["epochs"], validation_data=(X_test, y_test), callbacks=[model_checkpoint, tensorboard])
-
+    history = model.fit(
+        X_train,
+        y_train,
+        epochs=config["epochs"],
+        validation_data=(X_test, y_test),
+        callbacks=[model_checkpoint, tensorboard],
+    )

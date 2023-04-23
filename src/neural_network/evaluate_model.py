@@ -6,7 +6,13 @@ import matplotlib.pyplot as plt
 from tensorflow import keras
 from keras.models import load_model
 from dataset import load_and_split_dataset
-from sklearn.metrics import accuracy_score, precision_score, recall_score, confusion_matrix, f1_score
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    confusion_matrix,
+    f1_score,
+)
 from sklearn.model_selection import train_test_split
 
 
@@ -35,7 +41,7 @@ with open("../../models/knn_best.sav", "rb") as f:
     knn = pickle.load(f)
 
 # Load the neural network
-nn_model = load_model('../../models/nn_best.h5', compile=False)
+nn_model = load_model("../../models/nn_best.h5", compile=False)
 
 nn_model.compile(
     optimizer=keras.optimizers.Adam(),
@@ -82,35 +88,35 @@ cm_3 = confusion_matrix(y_test_n, y_pred3)
 
 # Create a confusion map for Decision Tree Classifier
 fig, ax = plt.subplots(figsize=(8, 8))
-ax = sns.heatmap(cm_1, annot=True, cmap='Blues', fmt='g', cbar=False)
+ax = sns.heatmap(cm_1, annot=True, cmap="Blues", fmt="g", cbar=False)
 
-ax.set_xlabel('Predicted labels')
-ax.set_ylabel('True labels')
-ax.set_title(f'Decision Tree - Confusion Matrix')
+ax.set_xlabel("Predicted labels")
+ax.set_ylabel("True labels")
+ax.set_title(f"Decision Tree - Confusion Matrix")
 
-plt.savefig(f'confusion_matrix_dtc.png')
+plt.savefig(f"confusion_matrix_dtc.png")
 
 
 # Create a confusion map for KNN Classifier
 fig, ax = plt.subplots(figsize=(8, 8))
-ax = sns.heatmap(cm_2, annot=True, cmap='Blues', fmt='g', cbar=False)
+ax = sns.heatmap(cm_2, annot=True, cmap="Blues", fmt="g", cbar=False)
 
-ax.set_xlabel('Predicted labels')
-ax.set_ylabel('True labels')
-ax.set_title(f'KNN - Confusion Matrix')
+ax.set_xlabel("Predicted labels")
+ax.set_ylabel("True labels")
+ax.set_title(f"KNN - Confusion Matrix")
 
-plt.savefig(f'confusion_matrix_knn.png')
+plt.savefig(f"confusion_matrix_knn.png")
 
 
 # Create a confusion map for neural network
 fig, ax = plt.subplots(figsize=(8, 8))
-ax = sns.heatmap(cm_3, annot=True, cmap='Blues', fmt='g', cbar=False)
+ax = sns.heatmap(cm_3, annot=True, cmap="Blues", fmt="g", cbar=False)
 
-ax.set_xlabel('Predicted labels')
-ax.set_ylabel('True labels')
-ax.set_title(f'Neural Network - Confusion Matrix')
+ax.set_xlabel("Predicted labels")
+ax.set_ylabel("True labels")
+ax.set_title(f"Neural Network - Confusion Matrix")
 
-plt.savefig(f'confusion_matrix_nn.png')
+plt.savefig(f"confusion_matrix_nn.png")
 
 
 # Show results

@@ -6,7 +6,9 @@ from keras.layers import Dense, Dropout
 from dataset import load_and_split_dataset
 
 
-def build_model(name: str, hidden_layers: int, use_dropout: bool, dropout_value: float, **kwargs):
+def build_model(
+    name: str, hidden_layers: int, use_dropout: bool, dropout_value: float, **kwargs
+):
     """
     The function builds a neural network for classification based on the Cover Type dataset.
     The model is dynamically created using passed parameters.
